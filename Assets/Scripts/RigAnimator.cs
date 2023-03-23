@@ -14,19 +14,12 @@ namespace Mediapipe.Unity.Holistic
         private GameObject _rightHandConstraintParents;
         [SerializeField]
         private GameObject _model;
-        [SerializeField]
-        private Vector3 _upDirection = Vector3.up;
-        [SerializeField]
-        private Vector3 _forwardDirection = Vector3.forward;
-        
-        private Matrix4x4 handToPose;
-        
+        [SerializeField]        
         
         private LandmarkList poseWorldLandmarksCache;
         private LandmarkList leftHandWorldLandmarksCache;
         private LandmarkList rightHandWorldLandmarksCache;
         public void animate(LandmarkList poseWorldLandmarks, LandmarkList leftHandWorldLandmarks, LandmarkList rightHandWorldLandmarks ) {
-            
             // we impplement a cache because not all landmarks are available in every frame
             if (poseWorldLandmarks != null) {
                 poseWorldLandmarksCache = cloneLandmarkList(poseWorldLandmarks);
@@ -41,12 +34,10 @@ namespace Mediapipe.Unity.Holistic
                 return;
             }
             
-            
             animatePose(poseWorldLandmarksCache);
-            animateRightHand(rightHandWorldLandmarksCache);
+            animateHand(rightHandWorldLandmarksCache, "right");
+            animateHand(leftHandWorldLandmarksCache, "left");
         }
-        
-        
         
          // cloneLandmarkList() - Clones a landmark list
         private LandmarkList cloneLandmarkList(LandmarkList landmarkList) {
@@ -61,9 +52,8 @@ namespace Mediapipe.Unity.Holistic
             return landmarkListCopy;
         }
         
-        
-        // animateRightHand() - Animates the parents of the model constraints
-        private void animateRightHand(LandmarkList rightHandWorldLandmarks) {
+        // animateHand() - Animates the parents of the model constraints
+        private void animateHand(LandmarkList rightHandWorldLandmarks, string handType) {
             var landmarks = cloneLandmarkList(rightHandWorldLandmarks).Landmark;
 
             
@@ -95,54 +85,80 @@ namespace Mediapipe.Unity.Holistic
             }
         
             // position constraint parents
-            Debug.Log("_rightHandConstraintParents" + _rightHandConstraintParents);
-            _rightHandConstraintParents.transform.Find("wrist").localPosition = new Vector3(wrist.X, wrist.Y, wrist.Z);
-            _rightHandConstraintParents.transform.Find("thumb_cmc").localPosition = new Vector3(thumb_cmc.X, thumb_cmc.Y, thumb_cmc.Z);
-            _rightHandConstraintParents.transform.Find("thumb_mpc").localPosition = new Vector3(thumb_mcp.X, thumb_mcp.Y, thumb_mcp.Z);
-            _rightHandConstraintParents.transform.Find("thumb_ip").localPosition = new Vector3(thumb_ip.X, thumb_ip.Y, thumb_ip.Z);
-            _rightHandConstraintParents.transform.Find("thumb_tip").localPosition = new Vector3(thumb_tip.X, thumb_tip.Y, thumb_tip.Z);
-            _rightHandConstraintParents.transform.Find("index_finger_mcp").localPosition = new Vector3(index_finger_mcp.X, index_finger_mcp.Y, index_finger_mcp.Z);
-            _rightHandConstraintParents.transform.Find("index_finger_pip").localPosition = new Vector3(index_finger_pip.X, index_finger_pip.Y, index_finger_pip.Z);
-            _rightHandConstraintParents.transform.Find("index_finger_dip").localPosition = new Vector3(index_finger_dip.X, index_finger_dip.Y, index_finger_dip.Z);
-            _rightHandConstraintParents.transform.Find("index_finger_tip").localPosition = new Vector3(index_finger_tip.X, index_finger_tip.Y, index_finger_tip.Z);
-            _rightHandConstraintParents.transform.Find("middle_finger_mcp").localPosition = new Vector3(middle_finger_mcp.X, middle_finger_mcp.Y, middle_finger_mcp.Z);
-            _rightHandConstraintParents.transform.Find("middle_finger_pip").localPosition = new Vector3(middle_finger_pip.X, middle_finger_pip.Y, middle_finger_pip.Z);
-            _rightHandConstraintParents.transform.Find("middle_finger_dip").localPosition = new Vector3(middle_finger_dip.X, middle_finger_dip.Y, middle_finger_dip.Z);
-            _rightHandConstraintParents.transform.Find("middle_finger_tip").localPosition = new Vector3(middle_finger_tip.X, middle_finger_tip.Y, middle_finger_tip.Z);
-            _rightHandConstraintParents.transform.Find("ring_finger_mcp").localPosition = new Vector3(ring_finger_mcp.X, ring_finger_mcp.Y, ring_finger_mcp.Z);
-            _rightHandConstraintParents.transform.Find("ring_finger_pip").localPosition = new Vector3(ring_finger_pip.X, ring_finger_pip.Y, ring_finger_pip.Z);
-            _rightHandConstraintParents.transform.Find("ring_finger_dip").localPosition = new Vector3(ring_finger_dip.X, ring_finger_dip.Y, ring_finger_dip.Z);
-            _rightHandConstraintParents.transform.Find("ring_finger_tip").localPosition = new Vector3(ring_finger_tip.X, ring_finger_tip.Y, ring_finger_tip.Z);
-            _rightHandConstraintParents.transform.Find("pinky_mcp").localPosition = new Vector3(pinky_mcp.X, pinky_mcp.Y, pinky_mcp.Z);
-            _rightHandConstraintParents.transform.Find("pinky_pip").localPosition = new Vector3(pinky_pip.X, pinky_pip.Y, pinky_pip.Z);
-            _rightHandConstraintParents.transform.Find("pinky_dip").localPosition = new Vector3(pinky_dip.X, pinky_dip.Y, pinky_dip.Z);
-            _rightHandConstraintParents.transform.Find("pinky_tip").localPosition = new Vector3(pinky_tip.X, pinky_tip.Y, pinky_tip.Z);
+            GameObject handConstraintParents;
+            Transform poseWrist;
+            
+            if (handType == "right") {
+                handConstraintParents = _rightHandConstraintParents;
+                poseWrist = _poseConstraintParents.transform.Find("right_wrist");
+            } else {
+                handConstraintParents = _leftHandConstraintParents;
+                poseWrist = _poseConstraintParents.transform.Find("left_wrist");
+            }
+            
+            handConstraintParents.transform.Find("wrist").localPosition = new Vector3(wrist.X, wrist.Y, wrist.Z);
+            handConstraintParents.transform.Find("thumb_cmc").localPosition = new Vector3(thumb_cmc.X, thumb_cmc.Y, thumb_cmc.Z);
+            handConstraintParents.transform.Find("thumb_mcp").localPosition = new Vector3(thumb_mcp.X, thumb_mcp.Y, thumb_mcp.Z);
+            handConstraintParents.transform.Find("thumb_ip").localPosition = new Vector3(thumb_ip.X, thumb_ip.Y, thumb_ip.Z);
+            handConstraintParents.transform.Find("thumb_tip").localPosition = new Vector3(thumb_tip.X, thumb_tip.Y, thumb_tip.Z);
+            handConstraintParents.transform.Find("index_finger_mcp").localPosition = new Vector3(index_finger_mcp.X, index_finger_mcp.Y, index_finger_mcp.Z);
+            handConstraintParents.transform.Find("index_finger_pip").localPosition = new Vector3(index_finger_pip.X, index_finger_pip.Y, index_finger_pip.Z);
+            handConstraintParents.transform.Find("index_finger_dip").localPosition = new Vector3(index_finger_dip.X, index_finger_dip.Y, index_finger_dip.Z);
+            handConstraintParents.transform.Find("index_finger_tip").localPosition = new Vector3(index_finger_tip.X, index_finger_tip.Y, index_finger_tip.Z);
+            handConstraintParents.transform.Find("middle_finger_mcp").localPosition = new Vector3(middle_finger_mcp.X, middle_finger_mcp.Y, middle_finger_mcp.Z);
+            handConstraintParents.transform.Find("middle_finger_pip").localPosition = new Vector3(middle_finger_pip.X, middle_finger_pip.Y, middle_finger_pip.Z);
+            handConstraintParents.transform.Find("middle_finger_dip").localPosition = new Vector3(middle_finger_dip.X, middle_finger_dip.Y, middle_finger_dip.Z);
+            handConstraintParents.transform.Find("middle_finger_tip").localPosition = new Vector3(middle_finger_tip.X, middle_finger_tip.Y, middle_finger_tip.Z);
+            handConstraintParents.transform.Find("ring_finger_mcp").localPosition = new Vector3(ring_finger_mcp.X, ring_finger_mcp.Y, ring_finger_mcp.Z);
+            handConstraintParents.transform.Find("ring_finger_pip").localPosition = new Vector3(ring_finger_pip.X, ring_finger_pip.Y, ring_finger_pip.Z);
+            handConstraintParents.transform.Find("ring_finger_dip").localPosition = new Vector3(ring_finger_dip.X, ring_finger_dip.Y, ring_finger_dip.Z);
+            handConstraintParents.transform.Find("ring_finger_tip").localPosition = new Vector3(ring_finger_tip.X, ring_finger_tip.Y, ring_finger_tip.Z);
+            handConstraintParents.transform.Find("pinky_mcp").localPosition = new Vector3(pinky_mcp.X, pinky_mcp.Y, pinky_mcp.Z);
+            handConstraintParents.transform.Find("pinky_pip").localPosition = new Vector3(pinky_pip.X, pinky_pip.Y, pinky_pip.Z);
+            handConstraintParents.transform.Find("pinky_dip").localPosition = new Vector3(pinky_dip.X, pinky_dip.Y, pinky_dip.Z);
+            handConstraintParents.transform.Find("pinky_tip").localPosition = new Vector3(pinky_tip.X, pinky_tip.Y, pinky_tip.Z);
         
             // position _rightHandConstraintParent to poseWrist position minus wrist position
-            var poseWrist = _poseConstraintParents.transform.Find("right_wrist");
             var poseWristPosition = poseWrist.position;
-            _rightHandConstraintParents.transform.position = new Vector3(poseWristPosition.x - wrist.X, poseWristPosition.y - wrist.Y, poseWristPosition.z - wrist.Z);
-                    
-            // rotate _poseConstraintParents.transform.Find("right_wrist")
-            Vector3 indexToMiddle = new Vector3(middle_finger_mcp.X, middle_finger_mcp.Y, middle_finger_mcp.Z) - new Vector3(index_finger_mcp.X, index_finger_mcp.Y, index_finger_mcp.Z);
-            Vector3 pinkyToThumb = new Vector3(thumb_cmc.X, thumb_cmc.Y, thumb_cmc.Z) - new Vector3(pinky_mcp.X, pinky_mcp.Y, pinky_mcp.Z);
-            Vector3 forwardDirection = Vector3.Cross(indexToMiddle, pinkyToThumb).normalized;
-            Vector3 upDirection = (new Vector3(index_finger_mcp.X, index_finger_mcp.Y, index_finger_mcp.Z) - new Vector3(wrist.X, wrist.Y, wrist.Z)).normalized;
-            Vector3 rightDirection = Vector3.Cross(forwardDirection, upDirection).normalized;
+            handConstraintParents.transform.position = new Vector3(poseWristPosition.x - wrist.X, poseWristPosition.y - wrist.Y, poseWristPosition.z - wrist.Z);
 
-            Quaternion wristRotation = Quaternion.LookRotation(forwardDirection, upDirection) * Quaternion.Euler(0, 0, 180);
-            poseWrist.rotation = wristRotation;
-        }
-        
-        private Matrix4x4 CreateRotationMatrix(Vector3 forward, Vector3 up)
-        {
-            Vector3 right = Vector3.Cross(up, forward);
-            Matrix4x4 rotationMatrix = new Matrix4x4();
-            rotationMatrix.SetColumn(0, right);
-            rotationMatrix.SetColumn(1, up);
-            rotationMatrix.SetColumn(2, forward);
-            rotationMatrix[3, 3] = 1;
-            return rotationMatrix;
+
+            /* Rotation of wrist */
+             // Calculate two vectors from the wrist landmark to other landmarks (index_finger_mcp and pinky_mcp)
+            Vector3 wristToIndexFinger = new Vector3(index_finger_mcp.X - wrist.X, index_finger_mcp.Y - wrist.Y, index_finger_mcp.Z - wrist.Z);
+            Vector3 wristToPinky = new Vector3(pinky_mcp.X - wrist.X, pinky_mcp.Y - wrist.Y, pinky_mcp.Z - wrist.Z);
+
+            // Normalize the vectors
+            wristToIndexFinger.Normalize();
+            wristToPinky.Normalize();
+
+            // Calculate the cross product of the two vectors to get a normal vector
+            Vector3 normal = Vector3.Cross(wristToIndexFinger, wristToPinky);
+
+            // Calculate the angle between the vectors using the dot product
+            float angle = Mathf.Acos(Vector3.Dot(wristToIndexFinger, wristToPinky)) * Mathf.Rad2Deg;
+
+            // Use Quaternion.LookRotation to create a rotation that aligns the model's hand with the landmarks
+            Quaternion wristRotation = Quaternion.LookRotation(wristToIndexFinger, normal);
+            handConstraintParents.transform.Find("wrist").localRotation = wristRotation;
+            
+            /* Rotation of fingers */
+            handConstraintParents.transform.Find("thumb_cmc").transform.LookAt(handConstraintParents.transform.Find("thumb_mcp"));
+            handConstraintParents.transform.Find("thumb_mcp").transform.LookAt(handConstraintParents.transform.Find("thumb_ip"));
+            handConstraintParents.transform.Find("thumb_ip").transform.LookAt(handConstraintParents.transform.Find("thumb_tip"));
+            handConstraintParents.transform.Find("index_finger_mcp").transform.LookAt(handConstraintParents.transform.Find("index_finger_pip"));
+            handConstraintParents.transform.Find("index_finger_pip").transform.LookAt(handConstraintParents.transform.Find("index_finger_dip"));
+            handConstraintParents.transform.Find("index_finger_dip").transform.LookAt(handConstraintParents.transform.Find("index_finger_tip"));
+            handConstraintParents.transform.Find("middle_finger_mcp").transform.LookAt(handConstraintParents.transform.Find("middle_finger_pip"));
+            handConstraintParents.transform.Find("middle_finger_pip").transform.LookAt(handConstraintParents.transform.Find("middle_finger_dip"));
+            handConstraintParents.transform.Find("middle_finger_dip").transform.LookAt(handConstraintParents.transform.Find("middle_finger_tip"));
+            handConstraintParents.transform.Find("ring_finger_mcp").transform.LookAt(handConstraintParents.transform.Find("ring_finger_pip"));
+            handConstraintParents.transform.Find("ring_finger_pip").transform.LookAt(handConstraintParents.transform.Find("ring_finger_dip"));
+            handConstraintParents.transform.Find("ring_finger_dip").transform.LookAt(handConstraintParents.transform.Find("ring_finger_tip"));
+            handConstraintParents.transform.Find("pinky_mcp").transform.LookAt(handConstraintParents.transform.Find("pinky_pip"));
+            handConstraintParents.transform.Find("pinky_pip").transform.LookAt(handConstraintParents.transform.Find("pinky_dip"));
+            handConstraintParents.transform.Find("pinky_dip").transform.LookAt(handConstraintParents.transform.Find("pinky_tip"));
+            
         }
 
         // animatePose() - Animates the parents of the model constraints
@@ -214,10 +230,7 @@ namespace Mediapipe.Unity.Holistic
             lower_body_center.Y = (middle_body_center.Y + hip_center.Y) / 2;
             lower_body_center.Z = (middle_body_center.Z + hip_center.Z) / 2;
             
-            
-            
-            
-            
+
             // position constraint parents
             _poseConstraintParents.transform.Find("nose").transform.localPosition = new Vector3(nose.X, nose.Y, nose.Z);
             _poseConstraintParents.transform.Find("left_shoulder").transform.localPosition = new Vector3(left_shoulder.X, left_shoulder.Y, left_shoulder.Z);
@@ -244,20 +257,18 @@ namespace Mediapipe.Unity.Holistic
             _poseConstraintParents.transform.Find("right_index").transform.localPosition = new Vector3(right_index.X, right_index.Y, right_index.Z);
             _poseConstraintParents.transform.Find("right_thumb").transform.localPosition = new Vector3(right_thumb.X, right_thumb.Y, right_thumb.Z);
             _poseConstraintParents.transform.Find("right_pinky").transform.localPosition = new Vector3(right_pinky.X, right_pinky.Y, right_pinky.Z);
-            //  distance between 3d points
-            var constraint_left_shoulder = _poseConstraintParents.transform.Find("left_shoulder").transform.position;
-            var constraint_right_shoulder = _poseConstraintParents.transform.Find("right_shoulder").transform.position;
-            var distance_constraint = Mathf.Sqrt(Mathf.Pow((constraint_left_shoulder.x - constraint_right_shoulder.x), 2) + Mathf.Pow((constraint_left_shoulder.y - constraint_right_shoulder.y), 2) + Mathf.Pow((constraint_left_shoulder.z - constraint_right_shoulder.z), 2));
-            var model_left_shoulder = _model.transform.Find("root").transform.Find("pelvis").transform.Find("spine_01").transform.Find("spine_02").transform.Find("spine_03").transform.Find("clavicle_l").transform.Find("upperarm_l").transform.position;
-            var model_right_shoulder = _model.transform.Find("root").transform.Find("pelvis").transform.Find("spine_01").transform.Find("spine_02").transform.Find("spine_03").transform.Find("clavicle_r").transform.Find("upperarm_r").transform.position;
-            var distance_model = Mathf.Sqrt(Mathf.Pow((model_left_shoulder.x - model_right_shoulder.x), 2) + Mathf.Pow((model_left_shoulder.y - model_right_shoulder.y), 2) + Mathf.Pow((model_left_shoulder.z - model_right_shoulder.z), 2));
             
-            var d = distance_constraint / distance_model;
-            // rescale _model to fit the media pipe skeleton
-            _model.transform.localScale = new Vector3((float)d * _model.transform.localScale.x, (float)d * _model.transform.localScale.y, (float)d * _model.transform.localScale.z);
+            // rotate constraint parents
+            _poseConstraintParents.transform.Find("lower_body_center").transform.LookAt(_poseConstraintParents.transform.Find("middle_body_center").transform);
+            _poseConstraintParents.transform.Find("middle_body_center").transform.LookAt(_poseConstraintParents.transform.Find("upper_body_center").transform);
+            _poseConstraintParents.transform.Find("upper_body_center").transform.LookAt(_poseConstraintParents.transform.Find("shoulder_center").transform);
+            _poseConstraintParents.transform.Find("left_shoulder").transform.LookAt(_poseConstraintParents.transform.Find("left_elbow").transform);
+            _poseConstraintParents.transform.Find("left_elbow").transform.LookAt(_poseConstraintParents.transform.Find("left_wrist").transform);
+            _poseConstraintParents.transform.Find("right_shoulder").transform.LookAt(_poseConstraintParents.transform.Find("right_elbow").transform);
+            _poseConstraintParents.transform.Find("right_elbow").transform.LookAt(_poseConstraintParents.transform.Find("right_wrist").transform);
             
             
-            
+
         }
     }
 }

@@ -232,31 +232,31 @@ namespace Mediapipe.Unity.Holistic
             
 
             // position constraint parents
-            _poseConstraintParents.transform.Find("nose").transform.localPosition = new Vector3(nose.X, nose.Y, nose.Z);
-            _poseConstraintParents.transform.Find("left_shoulder").transform.localPosition = new Vector3(left_shoulder.X, left_shoulder.Y, left_shoulder.Z);
-            _poseConstraintParents.transform.Find("right_shoulder").transform.localPosition = new Vector3(right_shoulder.X, right_shoulder.Y, right_shoulder.Z);
-            _poseConstraintParents.transform.Find("left_elbow").transform.localPosition = new Vector3(left_elbow.X, left_elbow.Y, left_elbow.Z);
-            _poseConstraintParents.transform.Find("right_elbow").transform.localPosition = new Vector3(right_elbow.X, right_elbow.Y, right_elbow.Z);
-            _poseConstraintParents.transform.Find("left_wrist").transform.localPosition = new Vector3(left_wrist.X, left_wrist.Y, left_wrist.Z);
-            _poseConstraintParents.transform.Find("right_wrist").transform.localPosition = new Vector3(right_wrist.X, right_wrist.Y, right_wrist.Z);
-            _poseConstraintParents.transform.Find("left_hip").transform.localPosition = new Vector3(left_hip.X, left_hip.Y, left_hip.Z);
-            _poseConstraintParents.transform.Find("right_hip").transform.localPosition = new Vector3(right_hip.X, right_hip.Y, right_hip.Z);
-            _poseConstraintParents.transform.Find("left_knee").transform.localPosition = new Vector3(left_knee.X, left_knee.Y, left_knee.Z);
-            _poseConstraintParents.transform.Find("right_knee").transform.localPosition = new Vector3(right_knee.X, right_knee.Y, right_knee.Z);
-            _poseConstraintParents.transform.Find("left_ankle").transform.localPosition = new Vector3(left_ankle.X, left_ankle.Y, left_ankle.Z);
-            _poseConstraintParents.transform.Find("right_ankle").transform.localPosition = new Vector3(right_ankle.X, right_ankle.Y, right_ankle.Z);
-            _poseConstraintParents.transform.Find("left_heel").transform.localPosition = new Vector3(left_heel.X, left_heel.Y, left_heel.Z);
-            _poseConstraintParents.transform.Find("right_heel").transform.localPosition = new Vector3(right_heel.X, right_heel.Y, right_heel.Z);
-            _poseConstraintParents.transform.Find("left_foot_index").transform.localPosition = new Vector3(left_foot_index.X, left_foot_index.Y, left_foot_index.Z);
-            _poseConstraintParents.transform.Find("right_foot_index").transform.localPosition = new Vector3(right_foot_index.X, right_foot_index.Y, right_foot_index.Z);
-            _poseConstraintParents.transform.Find("hip_center").transform.localPosition = new Vector3(hip_center.X, hip_center.Y, hip_center.Z);
-            _poseConstraintParents.transform.Find("shoulder_center").transform.localPosition = new Vector3(shoulder_center.X, shoulder_center.Y, shoulder_center.Z);
-            _poseConstraintParents.transform.Find("middle_body_center").transform.localPosition = new Vector3(middle_body_center.X, middle_body_center.Y, middle_body_center.Z);
-            _poseConstraintParents.transform.Find("upper_body_center").transform.localPosition = new Vector3(upper_body_center.X, upper_body_center.Y, upper_body_center.Z);
-            _poseConstraintParents.transform.Find("lower_body_center").transform.localPosition = new Vector3(lower_body_center.X, lower_body_center.Y, lower_body_center.Z);
-            _poseConstraintParents.transform.Find("right_index").transform.localPosition = new Vector3(right_index.X, right_index.Y, right_index.Z);
-            _poseConstraintParents.transform.Find("right_thumb").transform.localPosition = new Vector3(right_thumb.X, right_thumb.Y, right_thumb.Z);
-            _poseConstraintParents.transform.Find("right_pinky").transform.localPosition = new Vector3(right_pinky.X, right_pinky.Y, right_pinky.Z);
+            _poseConstraintParents.transform.Find("nose").transform.position = new Vector3(nose.X, nose.Y, nose.Z);
+            _poseConstraintParents.transform.Find("left_shoulder").transform.position = new Vector3(left_shoulder.X, left_shoulder.Y, left_shoulder.Z);
+            _poseConstraintParents.transform.Find("right_shoulder").transform.position = new Vector3(right_shoulder.X, right_shoulder.Y, right_shoulder.Z);
+            _poseConstraintParents.transform.Find("left_elbow").transform.position = new Vector3(left_elbow.X, left_elbow.Y, left_elbow.Z);
+            _poseConstraintParents.transform.Find("right_elbow").transform.position = new Vector3(right_elbow.X, right_elbow.Y, right_elbow.Z);
+            _poseConstraintParents.transform.Find("left_wrist").transform.position = new Vector3(left_wrist.X, left_wrist.Y, left_wrist.Z);
+            _poseConstraintParents.transform.Find("right_wrist").transform.position = new Vector3(right_wrist.X, right_wrist.Y, right_wrist.Z);
+            _poseConstraintParents.transform.Find("left_hip").transform.position = new Vector3(left_hip.X, left_hip.Y, left_hip.Z);
+            _poseConstraintParents.transform.Find("right_hip").transform.position = new Vector3(right_hip.X, right_hip.Y, right_hip.Z);
+            _poseConstraintParents.transform.Find("left_knee").transform.position = new Vector3(left_knee.X, left_knee.Y, left_knee.Z);
+            _poseConstraintParents.transform.Find("right_knee").transform.position = new Vector3(right_knee.X, right_knee.Y, right_knee.Z);
+            _poseConstraintParents.transform.Find("left_ankle").transform.position = new Vector3(left_ankle.X, left_ankle.Y, left_ankle.Z);
+            _poseConstraintParents.transform.Find("right_ankle").transform.position = new Vector3(right_ankle.X, right_ankle.Y, right_ankle.Z);
+            _poseConstraintParents.transform.Find("left_heel").transform.position = new Vector3(left_heel.X, left_heel.Y, left_heel.Z);
+            _poseConstraintParents.transform.Find("right_heel").transform.position = new Vector3(right_heel.X, right_heel.Y, right_heel.Z);
+            _poseConstraintParents.transform.Find("left_foot_index").transform.position = new Vector3(left_foot_index.X, left_foot_index.Y, left_foot_index.Z);
+            _poseConstraintParents.transform.Find("right_foot_index").transform.position = new Vector3(right_foot_index.X, right_foot_index.Y, right_foot_index.Z);
+            _poseConstraintParents.transform.Find("hip_center").transform.position = new Vector3(hip_center.X, hip_center.Y, hip_center.Z);
+            _poseConstraintParents.transform.Find("shoulder_center").transform.position = new Vector3(shoulder_center.X, shoulder_center.Y, shoulder_center.Z);
+            _poseConstraintParents.transform.Find("middle_body_center").transform.position = new Vector3(middle_body_center.X, middle_body_center.Y, middle_body_center.Z);
+            _poseConstraintParents.transform.Find("upper_body_center").transform.position = new Vector3(upper_body_center.X, upper_body_center.Y, upper_body_center.Z);
+            _poseConstraintParents.transform.Find("lower_body_center").transform.position = new Vector3(lower_body_center.X, lower_body_center.Y, lower_body_center.Z);
+            _poseConstraintParents.transform.Find("right_index").transform.position = new Vector3(right_index.X, right_index.Y, right_index.Z);
+            _poseConstraintParents.transform.Find("right_thumb").transform.position = new Vector3(right_thumb.X, right_thumb.Y, right_thumb.Z);
+            _poseConstraintParents.transform.Find("right_pinky").transform.position = new Vector3(right_pinky.X, right_pinky.Y, right_pinky.Z);
             
             // rotate constraint parents
             _poseConstraintParents.transform.Find("lower_body_center").transform.LookAt(_poseConstraintParents.transform.Find("middle_body_center").transform);
@@ -267,8 +267,34 @@ namespace Mediapipe.Unity.Holistic
             _poseConstraintParents.transform.Find("right_shoulder").transform.LookAt(_poseConstraintParents.transform.Find("right_elbow").transform);
             _poseConstraintParents.transform.Find("right_elbow").transform.LookAt(_poseConstraintParents.transform.Find("right_wrist").transform);
             
-            
 
+
+            // scale the model to the correct body size
+            var constraint_left_shoulder = _poseConstraintParents.transform.Find("left_shoulder").transform;
+            var constraint_right_shoulder = _poseConstraintParents.transform.Find("right_shoulder").transform;
+            var model_left_shoulder = _model.transform.Find("root").transform.Find("pelvis").transform.Find("spine_01").transform.Find("spine_02").transform.Find("spine_03").transform.Find("clavicle_l").transform.Find("upperarm_l").transform;
+            var model_right_shoulder = _model.transform.Find("root").transform.Find("pelvis").transform.Find("spine_01").transform.Find("spine_02").transform.Find("spine_03").transform.Find("clavicle_r").transform.Find("upperarm_r").transform;
+            
+            var constraint_shoulder_length = Vector3.Distance(constraint_left_shoulder.position, constraint_right_shoulder.position);
+            var model_shoulder_length = Vector3.Distance(model_left_shoulder.position, model_right_shoulder.position);
+            
+            Debug.Log("constraint_left_shoulder_position: " + constraint_left_shoulder.position);
+            Debug.Log("constraint_right_shoulder_position: " + constraint_right_shoulder.position);
+            Debug.Log("model_left_shoulder_position: " + model_left_shoulder.position);
+            Debug.Log("model_right_shoulder_position: " + model_right_shoulder.position);
+            Debug.Log("constraint_shoulder_length: " + constraint_shoulder_length);
+            Debug.Log("model_shoulder_length: " + model_shoulder_length);
+            
+            var scale_factor = constraint_shoulder_length / model_shoulder_length;
+            
+            Debug.Log("scale_factor: " + scale_factor);
+                        
+            _model.transform.localScale = new Vector3((float)scale_factor * _model.transform.localScale.x, (float)scale_factor * _model.transform.localScale.y, (float)scale_factor * _model.transform.localScale.z);
+            
+            // Visualize the positions and distances in the Scene view
+            Debug.DrawLine(constraint_left_shoulder.position, constraint_right_shoulder.position, UnityEngine.Color.green, 0.1f, false);
+            Debug.DrawLine(model_left_shoulder.position, model_right_shoulder.position, UnityEngine.Color.yellow, 0.1f, false);
         }
+        
     }
 }

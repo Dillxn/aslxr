@@ -68,7 +68,6 @@
      <Compile Include="Assets\Scripts\CustomHolisticTrackingSolution.cs" />
      <Compile Include="Assets\Samples\MediaPipe Unity Plugin\0.10.3\Official Solutions\UI\Scripts\ModalContents.cs" />
      <Compile Include="Assets\Samples\MediaPipe Unity Plugin\0.10.3\Official Solutions\UI\Scripts\GlobalConfig.cs" />
-     <Compile Include="Assets\Scripts\VRCameraFollower.cs" />
      <Compile Include="Assets\Samples\MediaPipe Unity Plugin\0.10.3\Official Solutions\Scenes\Instant Motion Tracking\InstantMotionTrackingSolution.cs" />
      <Compile Include="Assets\Samples\MediaPipe Unity Plugin\0.10.3\Official Solutions\Common\Scripts\ImageSourceProvider.cs" />
      <Compile Include="Assets\Samples\MediaPipe Unity Plugin\0.10.3\Official Solutions\Scenes\Hair Segmentation\HairSegmentationSolution.cs" />

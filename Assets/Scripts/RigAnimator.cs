@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using MediaPipe.Unity.Holistic;
 using UnityEngine;
 
 namespace Mediapipe.Unity.Holistic
@@ -17,6 +16,12 @@ namespace Mediapipe.Unity.Holistic
     private GameObject _model;
     [SerializeField]
     float head_distance = 0.15f;
+    [SerializeField]
+    public bool firstPersonView = false;
+    private bool firstPersonViewEnabled = false;
+
+    private Vector3 defaultCameraPosition;
+    private Quaternion defaultCameraRotation;
 
     private LandmarkList poseWorldLandmarksCache;
     private LandmarkList leftHandWorldLandmarksCache;
@@ -30,6 +35,28 @@ namespace Mediapipe.Unity.Holistic
     public void start()
     {
 
+    }
+
+    void Update()
+    {
+      if (firstPersonView && !firstPersonViewEnabled)
+      {
+        // turn on first person view
+        firstPersonViewEnabled = true;
+        defaultCameraPosition = Camera.main.transform.position;
+        defaultCameraRotation = Camera.main.transform.rotation;
+        Camera.main.transform.SetParent(_poseConstraintParents.transform.Find("head_center"), false);
+        Camera.main.transform.localPosition = Vector3.zero;
+        Camera.main.transform.localRotation = Quaternion.identity;
+      }
+      else if (!firstPersonView && firstPersonViewEnabled)
+      {
+        // turn off first person view
+        firstPersonViewEnabled = false;
+        Camera.main.transform.SetParent(null);
+        Camera.main.transform.position = defaultCameraPosition;
+        Camera.main.transform.rotation = defaultCameraRotation;
+      }
     }
 
 
@@ -433,6 +460,7 @@ namespace Mediapipe.Unity.Holistic
       // Visualize the positions and distances in the Scene view
       Debug.DrawLine(constraint_left_shoulder.position, constraint_right_shoulder.position, UnityEngine.Color.green, 0.1f, false);
       Debug.DrawLine(model_left_shoulder.position, model_right_shoulder.position, UnityEngine.Color.yellow, 0.1f, false);
+
     }
 
   }

@@ -366,6 +366,9 @@ namespace Mediapipe.Unity.Holistic
       _poseConstraintParents.transform.Find("right_index").transform.position = new Vector3(right_index.X, right_index.Y, right_index.Z);
       _poseConstraintParents.transform.Find("right_thumb").transform.position = new Vector3(right_thumb.X, right_thumb.Y, right_thumb.Z);
       _poseConstraintParents.transform.Find("right_pinky").transform.position = new Vector3(right_pinky.X, right_pinky.Y, right_pinky.Z);
+      _poseConstraintParents.transform.Find("left_index").transform.position = new Vector3(left_index.X, left_index.Y, left_index.Z);
+      _poseConstraintParents.transform.Find("left_thumb").transform.position = new Vector3(left_thumb.X, left_thumb.Y, left_thumb.Z);
+      _poseConstraintParents.transform.Find("left_pinky").transform.position = new Vector3(left_pinky.X, left_pinky.Y, left_pinky.Z);
 
       // rotate constraint parents
       _poseConstraintParents.transform.Find("lower_torso_center").transform.LookAt(_poseConstraintParents.transform.Find("middle_torso_center").transform);
@@ -400,8 +403,11 @@ namespace Mediapipe.Unity.Holistic
       // Calculate the direction from right_hip to left_hip
       var hip_direction = left_hip_transform.position - right_hip_transform.position;
 
-      // Set the rotation of hip_center to look at the direction
-      hip_center_transform.rotation = Quaternion.LookRotation(hip_direction, Vector3.up);
+      // Calculate the angle of rotation around the Y-axis
+      float y_rotation = Mathf.Atan2(hip_direction.x, hip_direction.z) * Mathf.Rad2Deg;
+
+      // Set the rotation of hip_center using Euler angles, keeping the X and Z rotations at 0
+      hip_center_transform.rotation = Quaternion.Euler(0, y_rotation, 0);
 
 
       /* rotation of head */
